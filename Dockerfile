@@ -10,17 +10,10 @@ ENV ENGINE_API_KEY=$ENGINE_API_KEY
 RUN set -e
 
 # Create app directory
-RUN mkdir -p /usr/src/app/
-WORKDIR /usr/src/app/
-
-# Install app dependencies
-COPY package.json /usr/src/app/
-
-RUN echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
-RUN yarn install --production
-RUN rm -f .npmrc
+RUN mkdir -p /usr/src/action
+WORKDIR /usr/src/action
 
 # Bundle app source
-COPY . /usr/src/app/
+COPY . /usr/src/action
 
 RUN npx apollo service:check --serviceName=search-service --tag=development
